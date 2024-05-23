@@ -100,3 +100,35 @@ export const getKingMoves = ({position,piece, rank, file}) => {
     })
     return moves
 }
+
+export const getPawnMoves = ({position,piece, rank, file}) => {  
+    const moves = []
+    const dir = piece === 'white-pawn' ? 1 : -1
+
+    if(!position?.[rank+dir]?.[file]) {
+        moves.push([rank+dir, file])
+    }
+
+    if(rank % 5 === 1) {
+        if(position?.[rank+dir]?.[file] === '' && position?.[rank+(2*dir)]?.[file] === '') {
+            moves.push([rank+(2*dir), file])
+        }
+    }
+
+    return moves
+}
+
+export const getPawnCaptures = ({position,piece, rank, file}) => {  
+    const moves = []
+    const dir = piece === 'white-pawn' ? 1 : -1
+    const enemy = piece.startsWith('white') ? 'black' : 'white'
+
+    if(position?.[rank+dir]?.[file-1] && position?.[rank+dir]?.[file-1]?.startsWith(enemy)) {
+        moves.push([rank+dir, file-1])
+    }
+
+    if(position?.[rank+dir]?.[file+1] && position?.[rank+dir]?.[file+1]?.startsWith(enemy)) {
+        moves.push([rank+dir, file+1])
+    }
+    return moves
+}
