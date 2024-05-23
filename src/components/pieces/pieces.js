@@ -42,7 +42,6 @@ function Pieces () {
         e.preventDefault()
     }
 
-    console.log('position', currentPosition)
     return (
         <div 
             ref={ref}

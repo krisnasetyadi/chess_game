@@ -24,9 +24,7 @@ const Board = () => {
         }
         return className
     }
-
-    console.log('ranks', ranks)
-    console.log('files', files)
+    
     return(
         <div className='board'>
             <Ranks ranks={ranks} />

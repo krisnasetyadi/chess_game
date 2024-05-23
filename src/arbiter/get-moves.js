@@ -79,3 +79,24 @@ export const getQueenMoves = ({position, piece, rank, file}) => {
    
     return moves
 }
+
+export const getKingMoves = ({position,piece, rank, file}) => {  
+    const moves = []
+    const us = piece.split('-')[0].toLowerCase()
+    // const enemy = us === 'white' ? 'black' : 'white'
+
+    const direction = [
+    [1, -1], [1, 0], [1, 1], 
+    [0, -1],           [0, 1],
+    [-1, -1], [-1, 0], [-1, 1]
+]
+    direction.forEach((dir) => {
+        const x = rank + (dir[0])
+        const y = file + (dir[1])
+
+        if(position?.[x]?.[y] !== undefined && !position?.[x]?.[y].startsWith(us)) {
+            moves.push([x, y])
+        }
+    })
+    return moves
+}
