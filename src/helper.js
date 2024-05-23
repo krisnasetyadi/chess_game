@@ -3,10 +3,10 @@ export const getCharacter = (index) => String.fromCharCode(index + 97)
 export const createPosition = () => {
     const position = new Array(8).fill('').map(x => new Array(8).fill(''))
 
-    for (let i = 0; i < 8; i++) {
-        position[1][i] = 'white-pawn'
-        position[6][i] = 'black-pawn'
-    }
+    // for (let i = 0; i < 8; i++) {
+    //     position[1][i] = 'white-pawn'
+    //     position[6][i] = 'black-pawn'
+    // }
 
     // white pieces
     position[0][0] = 'white-rook'

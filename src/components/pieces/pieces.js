@@ -3,7 +3,7 @@ import Piece from './piece'
 import { useRef, useState } from 'react'
 import { copyPosition, createPosition } from '../../helper'
 import { useAppContext } from '../../context/context'
-import { makeNewMove } from '../../reducer/actions/move'
+import { clearCandidates, makeNewMove } from '../../reducer/actions/move'
 
 function Pieces () {
     const ref = useRef()
@@ -27,11 +27,15 @@ function Pieces () {
 
         const [piece, rank, file] = e.dataTransfer.getData('text/plain').split(',')
 
-        newPosition[rank][file] = ''
-        newPosition[x][y] = piece
+        if(appState.candidateMoves.find(m => m[0] === x && m[1] === y)) {
+            newPosition[rank][file] = ''
+            newPosition[x][y] = piece
+            // setState(newPosition)
+            dispatch(makeNewMove({newPosition}))
+        }
 
-        // setState(newPosition)
-        dispatch(makeNewMove({newPosition}))
+        dispatch(clearCandidates())
+
     }
 
     const onDragOver = (e) => {
@@ -49,6 +53,7 @@ function Pieces () {
             
             {currentPosition.map((r, rank) => 
                 r.map((f, file) => {
+
                     return currentPosition[rank][file] ? <Piece key={rank+'-'+ file} rank={rank} file={file} piece={currentPosition[rank][file]}/> : null
                 })
             )}

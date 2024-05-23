@@ -11,6 +11,16 @@ export const reducer = (state, action) => {
             turn,
             position
         };
+        case actionTypes.GENERATE_CANDIDATE_MOVES:
+        return {
+            ...state,
+            candidateMoves: action.payload.candidateMoves
+        };
+        case actionTypes.CLEAR_CANDIDATES:
+            return {
+                ...state,
+                candidateMoves: []
+            }
         default:
         return state;
     }
