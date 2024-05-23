@@ -1,7 +1,7 @@
 import { getBishopMoves, getKingMoves, getKnightMoves, getPawnCaptures, getPawnMoves, getQueenMoves, getRookMoves } from "./get-moves"
 
 const arbiter = {
-    getRegularMoves: function({position, piece, rank, file}) {
+    getRegularMoves: function({position, prevPosition, piece, rank, file}) {
         if(piece.endsWith('rook')) {
             return getRookMoves({position, piece, rank, file})
         }
@@ -18,8 +18,19 @@ const arbiter = {
             return getKingMoves({position, piece, rank, file})
         }
         if(piece.endsWith('pawn')) {
-            return [...getPawnMoves({position, piece, rank, file}), ...getPawnCaptures({position, piece, rank, file})]
+            return getPawnMoves({position, piece, rank, file})
         }
+    },
+    getValidMoves: function({position, prevPosition, piece, rank, file}) {
+        let moves = this.getRegularMoves({position, prevPosition, piece, rank, file})
+        if(piece.endsWith('pawn')) {
+             moves = [
+                ...moves, 
+                ...getPawnCaptures({position, prevPosition, piece, rank, file})
+             ]
+        }
+
+        return moves
     }
 }
 

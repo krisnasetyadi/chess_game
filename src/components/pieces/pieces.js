@@ -28,6 +28,10 @@ function Pieces () {
         const [piece, rank, file] = e.dataTransfer.getData('text/plain').split(',')
 
         if(appState.candidateMoves.find(m => m[0] === x && m[1] === y)) {
+            // en passant capture
+            if(piece.endsWith('pawn') && !newPosition[x][y] && y !== file && x !== rank) {
+              newPosition[rank][y] = ''
+            }
             newPosition[rank][file] = ''
             newPosition[x][y] = piece
             // setState(newPosition)
@@ -35,7 +39,6 @@ function Pieces () {
         }
 
         dispatch(clearCandidates())
-
     }
 
     const onDragOver = (e) => {
